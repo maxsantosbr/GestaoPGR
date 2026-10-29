@@ -49,6 +49,14 @@ public class MainFrame extends JFrame {
         setLocationRelativeTo(null);
         setMinimumSize(new Dimension(1280, 720));
 
+        // Ícone da janela (barra de título + taskbar)
+        try {
+            java.net.URL iconUrl = getClass().getClassLoader().getResource("gestao-pgr-48.png");
+            if (iconUrl != null) {
+                setIconImage(new ImageIcon(iconUrl).getImage());
+            }
+        } catch (Exception ignored) {}
+
         setLayout(new BorderLayout());
 
         // Sistema será mostrado após login via mostrarSistema()
@@ -272,7 +280,7 @@ public class MainFrame extends JFrame {
 
     private JPanel createStatusBar() {
         JPanel bar = new JPanel(new BorderLayout());
-        bar.setPreferredSize(new Dimension(0, 28));
+        bar.setPreferredSize(new Dimension(0, 36));
         bar.setBackground(new Color(241, 245, 249));
         bar.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, new Color(226, 232, 240)));
 
@@ -281,10 +289,29 @@ public class MainFrame extends JFrame {
         status.setForeground(new Color(100, 116, 139));
         bar.add(status, BorderLayout.WEST);
 
+        // Imagem + perfil no canto direito
+        JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 0));
+        rightPanel.setOpaque(false);
+
+        ImageIcon logoIcon = null;
+        try {
+            java.net.URL logoUrl = getClass().getClassLoader().getResource("gestao-pgr-256.png");
+            if (logoUrl != null) {
+                ImageIcon original = new ImageIcon(logoUrl);
+                Image scaled = original.getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+                logoIcon = new ImageIcon(scaled);
+            }
+        } catch (Exception ignored) {}
+
+        if (logoIcon != null) {
+            rightPanel.add(new JLabel(logoIcon));
+        }
+
         JLabel right = new JLabel("Perfil: " + (usuarioPerfil != null ? usuarioPerfil : "-") + "  ");
         right.setFont(new Font("Segoe UI", Font.PLAIN, 11));
         right.setForeground(new Color(100, 116, 139));
-        bar.add(right, BorderLayout.EAST);
+        rightPanel.add(right);
+        bar.add(rightPanel, BorderLayout.EAST);
 
         return bar;
     }
