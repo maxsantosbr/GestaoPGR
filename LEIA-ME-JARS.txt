@@ -1,0 +1,5 @@
+Resumo dos arquivos JAR:
+
+Para distribuir/executar: use gestao-pgr.jar
+Para Launch4J: use gestao-pgr.jar
+Ignore: original-gestao-pgr-1.0.0-SNAPSHOT.jar (nao tem dependencias)
